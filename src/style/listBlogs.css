@@ -1,0 +1,53 @@
+.container-main {
+    border: none;
+    border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    margin-top: 10px;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    margin-top: 40px;
+    object-fit: cover;
+}
+
+.nick-name {
+    margin-left: 10px;
+    margin-top: 40px;
+    font-weight: 500;
+    color: black;
+}
+
+.main-image {
+    object-fit: cover;
+    width: 100%;
+}
+
+.title {
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+.main-line {
+    width: 95%;
+    margin-top: 40px;
+}
+
+.emotion:hover {
+    border-radius: 5px;
+    background-color: rgba(143, 144, 145,0.2);
+    height:35px;
+}
+
+.comment:hover {
+    border-radius: 5px;
+    background-color: rgba(143, 144, 145,0.2);
+    height:35px;
+    text-align: center;
+}
+
+.contain-create-post{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}

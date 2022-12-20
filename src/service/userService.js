@@ -1,0 +1,20 @@
+import {createAsyncThunk} from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const login = createAsyncThunk(
+    'user/login',
+    async (data)=>{
+        const res = await axios.post('http://localhost:3000/users/login',data)
+        console.log(res)
+        return res.data
+    }
+)
+export const register = createAsyncThunk(
+    'user/register',
+    async (data)=>{
+        const res = await axios.post('http://localhost:3000/users/register',data)
+        console.log(res)
+        return res.data
+    }
+)
+export default register();
