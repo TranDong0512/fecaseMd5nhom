@@ -17,4 +17,5 @@ export const register = createAsyncThunk(
         return res.data
     }
 )
-export default register();
+
+

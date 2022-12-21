@@ -20,6 +20,7 @@ function Login(props) {
             }
             else {
                 alert('tk dã bị khóa liên hệ admin để ở khóa')
+                navigate('/')
             }
         }
         else {

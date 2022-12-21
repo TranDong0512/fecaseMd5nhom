@@ -6,7 +6,6 @@ import {Link, Outlet} from "react-router-dom";
 function ListBlog(props) {
     const dispatch = useDispatch();
 
-
     return (
         <>
             <div className="row" style={{marginTop: '10px'}}>

@@ -9,6 +9,8 @@ import AddBlog from "./pages/home/blogs/AddBlog";
 import {useDispatch, useSelector} from "react-redux";
 
 import AdminBlogs from "./pages/home/adminBlogs/adminBlogs";
+import ListUserAdmin from "./pages/home/adminBlogs/listUser";
+import ListBlogAdmin from "./pages/home/adminBlogs/listBlog";
 
 function App() {
     const user = useSelector(state => {
@@ -20,7 +22,10 @@ function App() {
         <div className={"container-fluid"}>
             <Routes>
                 <Route path={''} element={<Login/>}/>
-                <Route path={'admin'} element={<AdminBlogs/>}/>
+                <Route path={'admin'} element={<AdminBlogs/>}>
+                    <Route path={''} element={<ListUserAdmin/>}/>
+                    <Route path={'list-blog'} element={<ListBlogAdmin/>}/>
+                </Route>
                 <Route path={'register'} element={<Register/>}/>
                 {
                     user.currentUser != null ?
