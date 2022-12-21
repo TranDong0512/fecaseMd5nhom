@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {deleteUser, getUser} from "../../service/adminService";
+import {AdminDeleteUser, AdminGetBlogs, AdminGetUser,} from "../../service/adminService";
 
 
 const initialState = {
@@ -10,16 +10,19 @@ const adminSlice = createSlice({
     initialState,
     reducers:{},
     extraReducers: builder => {
-        builder.addCase(getUser.fulfilled,(state, action)=>{
+        builder.addCase(AdminGetUser.fulfilled,(state, action)=>{
             console.log(action)
             state.currentAdmin = [...action.payload]
-
         })
-        builder.addCase(deleteUser.fulfilled,(state, action)=>{
+        builder.addCase(AdminDeleteUser.fulfilled,(state, action)=>{
             let arrNew = [...state.currentAdmin]
             let index = arrNew.findIndex(item => item.id === action.payload.id);
             arrNew.splice(index, 1);
             state.currentAdmin = arrNew;
+        })
+        builder.addCase(AdminGetBlogs.fulfilled,(state, action)=>{
+            console.log(action)
+            state.currentAdmin = action.payload
         })
     }
 })

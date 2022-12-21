@@ -1,18 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteUser, getUser} from "../../../service/adminService";
-import axios from "axios";
+import {AdminDeleteUser, AdminGetUser} from "../../../service/adminService";
 
-function ListUserAdmin(props) {
+function ListUserAdmin() {
     let dispatch = useDispatch();
-    const [userDelete,serUserDelete] = useState()
+
     const user = useSelector(state => {
         console.log(state.admin.currentAdmin)
         return state.admin.currentAdmin
     })
 
     useEffect(()=>{
-        dispatch(getUser())
+        dispatch(AdminGetUser())
     },[])
 
     return (
@@ -35,7 +34,7 @@ function ListUserAdmin(props) {
                             <td>{item.status}</td>
                             <td>{item.role}</td>
                            <button onClick={()=>{
-                                dispatch(deleteUser({id: item.id}))
+                                dispatch(AdminDeleteUser({id: item.id}))
                            }}>Delete</button>
                         </tr>
                     ))}
