@@ -19,6 +19,15 @@ export const AdminDeleteUser = createAsyncThunk(
     }
 )
 
+export const AdminDeleteBlog = createAsyncThunk(
+    'admin/deleteBlog',
+    async (payload)=>{
+        const res = await axios.delete(`http://localhost:3000/blogs/`+payload.id)
+        console.log(res)
+        return res.data
+    }
+)
+
 export const AdminGetBlogs = createAsyncThunk(
     'admin/getBlogs',
     async ()=>{

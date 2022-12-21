@@ -6,15 +6,18 @@ const initialState = {
     currentUser: JSON.parse(localStorage.getItem('user'))
 }
 const userSlice = createSlice({
-    name:'user',
+    name: 'user',
     initialState,
-    reducers:{},
+    reducers: {},
     extraReducers: builder => {
-        builder.addCase(login.fulfilled, (state,action)=>{
+        builder.addCase(login.fulfilled, (state, action) => {
             state.currentUser = action.payload
-            localStorage.setItem('user',JSON.stringify(action.payload))
+            localStorage.setItem('user', JSON.stringify(action.payload))
         })
-        builder.addCase(register.fulfilled,(state,action)=>{
+        builder.addCase(register.fulfilled, (state, action) => {
+            state.currentUser = action.payload
+        })
+        builder.addCase(getUser.fulfilled, (state, action) => {
             state.currentUser = action.payload
         })
     }

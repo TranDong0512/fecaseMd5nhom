@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {AdminDeleteUser, AdminGetBlogs, AdminGetUser,} from "../../service/adminService";
+import {AdminDeleteBlog, AdminDeleteUser, AdminGetBlogs, AdminGetUser,} from "../../service/adminService";
 
 
 const initialState = {
@@ -11,18 +11,22 @@ const adminSlice = createSlice({
     reducers:{},
     extraReducers: builder => {
         builder.addCase(AdminGetUser.fulfilled,(state, action)=>{
-            console.log(action)
             state.currentAdmin = [...action.payload]
         })
         builder.addCase(AdminDeleteUser.fulfilled,(state, action)=>{
             let arrNew = [...state.currentAdmin]
-            let index = arrNew.findIndex(item => item.id === action.payload.id);
+            let index = arrNew.findIndex(item => item.id === action.meta.arg.id);
             arrNew.splice(index, 1);
             state.currentAdmin = arrNew;
         })
         builder.addCase(AdminGetBlogs.fulfilled,(state, action)=>{
-            console.log(action)
             state.currentAdmin = action.payload
+        })
+        builder.addCase(AdminDeleteBlog.fulfilled,(state, action)=>{
+            let arrNew = [...state.currentAdmin]
+            let index = arrNew.findIndex(item => item.id === action.meta.arg.id)
+            arrNew.splice(index,1)
+            state.currentAdmin = arrNew
         })
     }
 })

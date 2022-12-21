@@ -7,9 +7,10 @@ function Navbar(props) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector(state => {
-        console.log(state.user)
-        return state.user
+        console.log(state)
+        return state.user.currentUser
     })
+
 
     return (
         <div>
@@ -29,22 +30,11 @@ function Navbar(props) {
                                     <Link className="nav-link" to="add-blog">ADD <span className="sr-only">(current)</span></Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Link</a>
-                                </li>
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="#" role="button"
-                                       data-toggle="dropdown" aria-expanded="false">
-                                        Dropdown
-                                    </a>
-                                    <div className="dropdown-menu">
-                                        <a className="dropdown-item" href="#">Action</a>
-                                        <a className="dropdown-item" href="#">Another action</a>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#">Something else here</a>
-                                    </div>
+                                    <Link className="nav-link" to="profile">Profile<span className="sr-only">(current)</span></Link>
+
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link disabled" style={{}}>Disabled</a>
+                                    <a className="nav-link disabled" style={{}}></a>
                                 </li>
                                 <li>
                                     <Formik initialValues={{
@@ -60,7 +50,7 @@ function Navbar(props) {
                                 </li>
                             </ul>
                             <div className="form-inline my-2 my-lg-0">
-
+                                {user.username}
                                  <button className=" ml-3 btn btn-outline-danger my-2 my-sm-0" type="submit" onClick={()=>{
                                      localStorage.clear()
                                      navigate('/')

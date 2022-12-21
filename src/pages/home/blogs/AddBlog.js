@@ -10,7 +10,7 @@ function AddBlog(props) {
         }
     };
     return (
-        <>
+        <div style={{marginTop:'90px'}}>
             <Editor
                 onInit={(evt, editor) => editorRef.current = editor}
                 initialValue="<p>This is the initial content of the editor.</p>"
@@ -70,7 +70,7 @@ function AddBlog(props) {
                 }}
             />
             <button onClick={log}>Log editor content</button>
-        </>
+        </div>
 
     )
 }

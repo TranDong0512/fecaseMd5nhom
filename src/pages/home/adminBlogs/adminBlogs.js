@@ -2,7 +2,7 @@ import React from 'react';
 import {Outlet} from "react-router-dom";
 import NavbarAdmin from "../../../component/NavbarAdmin";
 import ListUserAdmin from "./listUser";
-import ListBlogAmin from "./listBlog";
+import ListBlogAmin from "./listBlogAdmin";
 
 function AdminBlogs(props) {
 

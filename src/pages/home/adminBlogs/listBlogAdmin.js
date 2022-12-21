@@ -1,21 +1,22 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {AdminGetBlogs} from "../../../service/adminService";
+import {AdminDeleteBlog, AdminGetBlogs} from "../../../service/adminService";
 
-function ListBlogAdmin(props) {
+function ListBlogAdmin() {
     const dispatch = useDispatch()
     const blogs = useSelector(state => {
-        console.log(state.admin.currentAdmin[0])
         return state.admin.currentAdmin
     })
 
     useEffect(() => {
         dispatch(AdminGetBlogs())
     },[])
+
     return (
         <div className="row">
             <div className="col-12" style={{marginTop: '6em'}}>
-                <table className="table">
+                <h1>List Blog</h1>
+                <table className="table table-bordered">
                     <thead>
                     <tr>
                         <th>STT</th>
@@ -23,17 +24,25 @@ function ListBlogAdmin(props) {
                         <th>UserName</th>
                         <th>Title</th>
                         <th>Time</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     {blogs.map((blog,index)=>(
-                        <tr>
+
+                        <tr key={blog.id}>
                             <th>{index+1}</th>
                             <td>{blog.id}</td>
                             <td>{blog.username}</td>
                             <td>{blog.tittle}</td>
-                            <td>{blog.time.split("",10)}</td>
-
+                            <td>{blog.status ==="true" ? "Active" : "Un Active"}</td>
+                            <td>{blog.time.split('',10)}</td>
+                            <td>
+                                <button className="btn btn-danger" onClick={()=>{
+                                    dispatch(AdminDeleteBlog({id:blog.id}))
+                                }}>Delete</button>
+                            </td>
                         </tr>
                     ))}
                     </tbody>

@@ -17,13 +17,16 @@ function ListUserAdmin() {
     return (
 
             <div className="col-12" style={{marginTop:'6em'}}>
-                <table className="table">
+                <h1>List User</h1>
+                <table className="table table-bordered">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Role</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Action</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -33,9 +36,12 @@ function ListUserAdmin() {
                             <td>{item.username}</td>
                             <td>{item.status}</td>
                             <td>{item.role}</td>
-                           <button onClick={()=>{
-                                dispatch(AdminDeleteUser({id: item.id}))
-                           }}>Delete</button>
+                            <td>
+                                <button className="btn btn-danger" onClick={()=>{
+                                    dispatch(AdminDeleteUser({id: item.id}))
+                                }}>Delete</button>
+                            </td>
+
                         </tr>
                     ))}
 

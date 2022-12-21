@@ -29,8 +29,7 @@ function Register(props) {
                     <Formik initialValues={{
                         username: '',
                         password: '',
-                        status: "false",
-                        image: "abc.jpg",
+                        status: "true",
                         role: "user"
                     }} onSubmit={(values,{resetForm}) => {
                         handleRegister(values).then()
