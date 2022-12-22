@@ -3,16 +3,26 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, Outlet} from "react-router-dom";
 import {getBlogs} from "../../../service/blogsService";
 import '../../../style/cssListBlogUser.css'
+import {getUser} from "../../../service/userService";
 
 function ListBlog() {
     const dispatch = useDispatch();
     const blogs = useSelector(state => {
+        console.log(state)
         return state.blogs.blogs
     })
-    console.log("blog111", blogs)
+    //
+    const user = useSelector(state => {
+        console.log(state)
+        return state.user.currentUser.user
+    })
+    // console.log("blog111", blogs)
+    //
     useEffect(() => {
         dispatch(getBlogs())
     }, [])
+
+
     return (
         <>
             {blogs.map((item, index) => (
@@ -26,7 +36,7 @@ function ListBlog() {
                                         <div>
                                             <Link to={'#'}>
                                                 <img
-                                                    src={item.image}
+                                                    src={user.avatar}
                                                     alt="" className="avatar"/>
                                             </Link>
                                         </div>

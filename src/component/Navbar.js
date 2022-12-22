@@ -2,16 +2,15 @@ import React from 'react';
 import {Field, Form, Formik} from "formik";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {getBlogs, searchBlogs} from "../service/blogsService";
 
-function Navbar(props) {
-    const dispatch = useDispatch()
+function Navbar() {
     const navigate = useNavigate()
     const user = useSelector(state => {
         console.log(state)
-        return state.user.currentUser
+        return state.user.currentUser.user
     })
-
-
+    const dispatch = useDispatch()
     return (
         <div>
             <div className="row" >
@@ -39,7 +38,14 @@ function Navbar(props) {
                                 <li>
                                     <Formik initialValues={{
                                         search: ''
-                                    }} onSubmit={(values)=>{
+                                    }} onSubmit={(values,{resetForm})=>{
+                                        if(values === ""){
+                                            dispatch(getBlogs())
+                                        }
+                                        else {
+                                            dispatch(searchBlogs(values))
+                                            resetForm()
+                                        }
                                         console.log(values)
                                     }}>
                                         <Form className="form-inline my-2 my-lg-0" style={{position:'relative',left:"186px"}}>

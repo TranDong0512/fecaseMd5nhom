@@ -3,15 +3,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {getBlogs} from "../../../service/blogsService";
 import {Link} from "react-router-dom";
 import '../../../style/cssListBlogUser.css'
+import {deleteBlogUser} from "../../../service/blogsService";
 
 function ListBlogUser(props) {
     const dispatch = useDispatch();
 
-    const blogs = useSelector(({blogs}) => {
-        return blogs.blogs
+    const blogs = useSelector(state => {
+        console.log(state)
+        return state.blogs.blogs
     })
-    const user = useSelector(({user}) => {
-        return user.currentUser;
+    const user = useSelector(state => {
+        console.log(state)
+        return state.user.currentUser.user
     })
 
     useEffect(() => {
@@ -35,7 +38,7 @@ function ListBlogUser(props) {
                                                     <div>
                                                         <Link to={'#'}>
                                                             <img
-                                                                src={blog.image}
+                                                                src={user.avatar}
                                                                 alt="" className="avatar"/>
                                                         </Link>
                                                     </div>
@@ -43,8 +46,13 @@ function ListBlogUser(props) {
                                                     <div>
                                                         <Link to={'#'}>
                                                             <h3 className="nick-name">{blog.username}</h3>
-
                                                         </Link>
+                                                        <button className={"btn btn-outline-danger"} style={{float:"right",position:"relative",left:'23rem'}}
+                                                            onClick={  ()=>{
+                                                               dispatch(deleteBlogUser({id: blog.id}))
+                                                                 dispatch(getBlogs())
+                                                            }}
+                                                        >Delete</button>
                                                         <div className={'time-post'}>
                                                             <h6>{blog.time.split('', 10)}</h6>
                                                         </div>
@@ -95,8 +103,6 @@ function ListBlogUser(props) {
 
                             </div>
                         )
-                    } else {
-                        return "Không có dữ liệu"
                     }
                 })
 

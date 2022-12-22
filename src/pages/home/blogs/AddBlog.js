@@ -1,79 +1,88 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Field, Form, Formik} from "formik";
-import {Editor} from '@tinymce/tinymce-react'
-function AddBlog(props) {
-    const editorRef = useRef(null);
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {addBlogs} from "../../../service/blogsService";
+import {storage} from "../../../firebase";
+import {getDownloadURL, listAll, ref, uploadBytes} from "firebase/storage";
+import {v4} from "uuid";
 
-    const log = () => {
-        if (editorRef.current) {
-            console.log(editorRef.current.getContent());
+function AddBlog() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const users = useSelector(state => {
+        return state.user.currentUser;
+    })
+    const [submitting, setSubmitting] = useState(false)
+    const handleAdd = (values) => {
+        let data = {
+            ...values,
+            idUser: users.id,
+            image:img,
         }
+        dispatch(addBlogs(data))
+        navigate('/home')
+    }
+
+    const [imageUrls, setImageUrls] = useState([]);
+    const [img, setImg] = useState("");
+
+    const imagesListRef = ref(storage, "images/");
+    const uploadFile = (imageUpload) => {
+        if (imageUpload == null) return;
+        const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                setImg(url)
+                setSubmitting(false)
+            });
+        })
+
     };
+    useEffect(() => {
+        listAll(imagesListRef).then((response) => {
+            response.items.forEach((item) => {
+                getDownloadURL(item).then((url) => {
+                    setImageUrls((prev) => [...prev, url]);
+                });
+            });
+        });
+    }, []);
     return (
-        <div style={{marginTop:'90px'}}>
-            <Editor
-                onInit={(evt, editor) => editorRef.current = editor}
-                initialValue="<p>This is the initial content of the editor.</p>"
-                init={{
-                    selector: 'textarea#file-picker',
-                    plugins: 'image code',
-                    toolbar: 'undo redo | link image | code',
-                    /* enable title field in the Image dialog*/
-                    image_title: true,
-                    /* enable automatic uploads of images represented by blob or data URIs*/
-                    automatic_uploads: true,
-                    /*
-                      URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
-                      images_upload_url: 'postAcceptor.php',
-                      here we add custom filepicker only to Image dialog
-                    */
-                    file_picker_types: 'image',
-                    /* and here's our custom image picker*/
-                    file_picker_callback: function (cb, value, meta) {
-                        let input = document.createElement('input');
-                        input.setAttribute('type', 'file');
-                        input.setAttribute('accept', 'image/*');
 
-                        /*
-                          Note: In modern browsers input[type="file"] is functional without
-                          even adding it to the DOM, but that might not be the case in some older
-                          or quirky browsers like IE, so you might want to add it to the DOM
-                          just in case, and visually hide it. And do not forget do remove it
-                          once you do not need it anymore.
-                        */
-
-                        input.onchange = function () {
-                            let file = this.files[0];
-
-                            let reader = new FileReader();
-                            reader.onload = function () {
-                                /*
-                                  Note: Now we need to register the blob in TinyMCEs image blob
-                                  registry. In the next release this part hopefully won't be
-                                  necessary, as we are looking to handle it internally.
-                                */
-                                let id = 'blobid' + (new Date()).getTime();
-                                let blobCache =  window.tinymce.activeEditor.editorUpload.blobCache;
-                                let base64 = reader.result.split(',')[1];
-                                let blobInfo = blobCache.create(id, file, base64);
-                                blobCache.add(blobInfo);
-
-                                /* call the callback and populate the Title field with the file name */
-                                cb(blobInfo.blobUri(), { title: file.name });
-                            };
-                            reader.readAsDataURL(file);
-                        };
-
-                        input.click();
-                    },
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                }}
-            />
-            <button onClick={log}>Log editor content</button>
+        <div style={{marginTop:"100px"}}>
+            <h1 style={{textAlign: "center"}}>Add Blogs</h1>
+            <Formik initialValues={{
+                tittle: '',
+                content: '',
+                image: '',
+                url: imageUrls
+            }} onSubmit={(values) => {
+                handleAdd(values);
+            }}>
+                <Form>
+                    <div className="group">
+                        <label htmlFor="exampleInputEmail1">Title</label>
+                        <Field type={'text'} name={'tittle'} className={'form-control'}/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">Contents</label>
+                        <Field type={'text'} name={'content'} className={'form-control'}/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">Image</label>
+                        <input
+                            type="file" onChange={(event) => {
+                            setSubmitting(true)
+                            uploadFile(event.target.files[0])
+                        }}/>
+                    </div>
+                    <div className="form-group">
+                    </div>
+                    <button type="submit" disabled={submitting}>Submit</button>
+                </Form>
+            </Formik>
         </div>
-
-    )
+    );
 }
-export default AddBlog
-
-
+export default AddBlog;

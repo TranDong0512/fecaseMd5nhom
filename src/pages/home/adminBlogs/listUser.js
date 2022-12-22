@@ -31,14 +31,14 @@ function ListUserAdmin() {
                     </thead>
                     <tbody>
                     {user.map((item,index)=>(
-                        <tr key={item.id}>
-                            <th>{item.id}</th>
-                            <td>{item.username}</td>
-                            <td>{item.status}</td>
-                            <td>{item.role}</td>
+                        <tr key={item?.id}>
+                            <th>{item?.id}</th>
+                            <td>{item?.username}</td>
+                            <td>{item?.status ==="true" ? 'Active' : "UnActive"}</td>
+                            <td>{item?.role}</td>
                             <td>
                                 <button className="btn btn-danger" onClick={()=>{
-                                    dispatch(AdminDeleteUser({id: item.id}))
+                                    dispatch(AdminDeleteUser({id: item?.id}))
                                 }}>Delete</button>
                             </td>
 

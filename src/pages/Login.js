@@ -12,16 +12,13 @@ function Login(props) {
     const handleLogin = async (value) =>{
        let checkLogin = await dispatch(login(value))
         console.log(checkLogin)
+
         if (checkLogin.payload.token){
-            if(checkLogin.payload.username === "admin" && checkLogin.payload.role === 'admin'){
-                navigate('/admin')
-            }else if(checkLogin.payload.role === 'user' && checkLogin.payload.status === "true" ){
-                navigate('/home')
-            }
-            else {
-                alert('tk dã bị khóa liên hệ admin để ở khóa')
-                navigate('/')
-            }
+           if(checkLogin.payload.user.username === 'admin' && checkLogin.payload.user.role === 'admin'){
+               navigate('/admin')
+           }else if(checkLogin.payload.user.role ==="user" && checkLogin.payload.user.status === "true"){
+               navigate('/home')
+           }
         }
         else {
             alert('tk hoac mk không đúng')

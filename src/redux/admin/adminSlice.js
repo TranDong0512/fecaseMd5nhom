@@ -22,12 +22,7 @@ const adminSlice = createSlice({
         builder.addCase(AdminGetBlogs.fulfilled,(state, action)=>{
             state.currentAdmin = action.payload
         })
-        builder.addCase(AdminDeleteBlog.fulfilled,(state, action)=>{
-            let arrNew = [...state.currentAdmin]
-            let index = arrNew.findIndex(item => item.id === action.meta.arg.id)
-            arrNew.splice(index,1)
-            state.currentAdmin = arrNew
-        })
+
     }
 })
 

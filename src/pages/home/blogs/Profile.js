@@ -9,16 +9,16 @@ function Profile(props) {
 
     const dispatch = useDispatch()
     const user = useSelector(state => {
-        console.log(state.user.currentUser)
-        return state.user.currentUser
+        console.log(state)
+        return state.user.currentUser.user
     })
+
 
     useEffect(() => {
         dispatch(getBlogs())
     },[])
     return (
         <div>
-
             <div className="row" style={{marginTop: '90px'}}>
                 <div className="container emp-profile">
                     <form method="post">
@@ -26,7 +26,7 @@ function Profile(props) {
                             <div className="col-md-6">
                                 <div className="profile-img">
                                     <img
-                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                                        src={user.avatar}
                                         alt=""/>
                                     <div className="file btn btn-lg btn-primary">
                                         Change Photo

@@ -31,16 +31,17 @@ function ListBlogAdmin() {
                     <tbody>
                     {blogs.map((blog,index)=>(
 
-                        <tr key={blog.id}>
+                        <tr key={blog?.id}>
                             <th>{index+1}</th>
-                            <td>{blog.id}</td>
-                            <td>{blog.username}</td>
-                            <td>{blog.tittle}</td>
-                            <td>{blog.status ==="true" ? "Active" : "Un Active"}</td>
-                            <td>{blog.time.split('',10)}</td>
+                            <td>{blog?.id}</td>
+                            <td>{blog?.username}</td>
+                            <td>{blog?.tittle}</td>
+                            <td>{blog?.time?.split('',10)}</td>
+                            <td>{blog?.status ==="true" ? "Active" : "Un Active"}</td>
+
                             <td>
                                 <button className="btn btn-danger" onClick={()=>{
-                                    dispatch(AdminDeleteBlog({id:blog.id}))
+                                    dispatch(AdminDeleteBlog({id:blog?.id}))
                                 }}>Delete</button>
                             </td>
                         </tr>

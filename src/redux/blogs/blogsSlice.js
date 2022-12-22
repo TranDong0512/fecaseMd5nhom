@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getBlogs} from "../../service/blogsService";
+import {getBlogs, searchBlogs} from "../../service/blogsService";
+import {AdminDeleteBlog} from "../../service/adminService";
+import {deleteBlogUser} from "../../service/blogsService";
 const initialState = {
     blogs : []
 }
@@ -10,6 +12,16 @@ const blogsSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(getBlogs.fulfilled, (state, action) => {
             state.blogs = action.payload
+        })
+        builder.addCase(searchBlogs.fulfilled,(state, action) => {
+            state.blogs = [...action.payload]
+        })
+        builder.addCase(deleteBlogUser.fulfilled,(state, action)=>{
+            let arrNew = [...state.blogs]
+            console.log(action)
+            let index = arrNew.findIndex(item => item.id === action.payload)
+            arrNew.splice(index,1)
+            state.blogs = arrNew
         })
     }
 })
