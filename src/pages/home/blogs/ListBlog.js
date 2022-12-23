@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, Outlet} from "react-router-dom";
-import {getBlogs} from "../../../service/blogsService";
+import {addBlogs, getBlogs} from "../../../service/blogsService";
 import '../../../style/cssListBlogUser.css'
 import {getUser} from "../../../service/userService";
 
@@ -16,16 +16,18 @@ function ListBlog() {
         console.log(state)
         return state.user.currentUser.user
     })
-    // console.log("blog111", blogs)
-    //
+
+
     useEffect(() => {
         dispatch(getBlogs())
     }, [])
 
 
+
+
     return (
         <>
-            {blogs.map((item, index) => (
+            {blogs?.map((item, index) => (
                 <div className="row" style={{marginTop: '30px'}}>
                     <div className="col-12">
                         <div className="col-6 offset-3">
@@ -36,7 +38,7 @@ function ListBlog() {
                                         <div>
                                             <Link to={'#'}>
                                                 <img
-                                                    src={user.avatar}
+                                                    src={user?.avatar}
                                                     alt="" className="avatar"/>
                                             </Link>
                                         </div>
@@ -46,17 +48,17 @@ function ListBlog() {
                                                 <h3 className="nick-name">{item.username} </h3>
                                             </Link>
                                             <div className={'time-post'}>
-                                                <h6>{item.time.split('', 10)}</h6>
+                                                <h6>{item?.time.split('', 10)}</h6>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-12">
                                             <div className="title">
-                                                <h3>{item.tittle}</h3>
+                                                <h3>{item?.tittle}</h3>
                                             </div>
                                             <div className="content">
-                                                <h6>{item.content}</h6>
+                                                <h6>{item?.content}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -67,7 +69,7 @@ function ListBlog() {
                                         <div className="row">
                                             <div className="col-12">
                                                 <img
-                                                    src={item.image}
+                                                    src={item?.image}
                                                     alt="" className="main-image"/>
                                                 <hr className={'main-line'}/>
                                             </div>

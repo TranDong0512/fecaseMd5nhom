@@ -47,7 +47,7 @@ function ListBlogUser(props) {
                                                         <Link to={'#'}>
                                                             <h3 className="nick-name">{blog.username}</h3>
                                                         </Link>
-                                                        <button className={"btn btn-outline-danger"} style={{float:"right",position:"relative",left:'23rem'}}
+                                                        <button className={"btn btn-outline-danger"} style={{float:"right",position:"relative",left:'20rem'}}
                                                             onClick={  ()=>{
                                                                dispatch(deleteBlogUser({id: blog.id}))
                                                                  dispatch(getBlogs())

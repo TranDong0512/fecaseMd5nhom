@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getBlogs, searchBlogs} from "../../service/blogsService";
+import {addBlogs, getBlogs, searchBlogs} from "../../service/blogsService";
 import {AdminDeleteBlog} from "../../service/adminService";
 import {deleteBlogUser} from "../../service/blogsService";
 const initialState = {
@@ -22,6 +22,11 @@ const blogsSlice = createSlice({
             let index = arrNew.findIndex(item => item.id === action.payload)
             arrNew.splice(index,1)
             state.blogs = arrNew
+        })
+        builder.addCase(addBlogs.fulfilled,(state, action)=>{
+            console.log(action)
+            // let newArr = [...action.payload]
+
         })
     }
 })

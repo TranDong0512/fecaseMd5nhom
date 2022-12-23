@@ -11,7 +11,7 @@ function AddBlog() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const users = useSelector(state => {
-        return state.user.currentUser;
+        return state.user.currentUser.user;
     })
     const [submitting, setSubmitting] = useState(false)
     const handleAdd = (values) => {
