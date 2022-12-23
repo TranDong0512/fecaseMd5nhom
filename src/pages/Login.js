@@ -12,6 +12,7 @@ function Login(props) {
     const handleLogin = async (value) =>{
        let checkLogin = await dispatch(login(value))
         console.log(checkLogin)
+        console.log(value)
 
         if (checkLogin.payload.token){
            if(checkLogin.payload.user.username === 'admin' && checkLogin.payload.user.role === 'admin'){
